@@ -100,6 +100,10 @@ class AccessToken implements AccessTokenInterface
             "scope" => $scope
         );
 
+        if($user_id == null || empty($user_id)) {
+            $user_id = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/client_credential.php');
+        }
+
         $this->tokenStorage->setAccessToken($token["access_token"], $client_id, $user_id, $this->config['access_lifetime'] ? time() + $this->config['access_lifetime'] : null, $scope);
 
         /*
